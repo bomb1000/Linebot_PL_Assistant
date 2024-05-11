@@ -27,12 +27,18 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
 def GPT_response(text):
-    # 接收回應
-    response = openai.Completion.create(model="gpt-3.5-turbo", prompt=text, temperature=0.5, max_tokens=500)
+    # 使用 chat/completions 端点
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # 确保使用正确的模型名称
+        messages=[{"role": "system", "content": "您好！我是您的助手。"} ,{"role": "user", "content": text}],
+        temperature=0.5,
+        max_tokens=500
+    )
     print(response)
     # 重組回應
-    answer = response['choices'][0]['text'].replace('。','')
+    answer = response['choices'][0]['message']['content'].replace('。','')
     return answer
+
 
 
 # 監聽所有來自 /callback 的 Post Request
