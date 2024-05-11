@@ -58,11 +58,11 @@ def handle_message(event):
     try:
         GPT_answer = GPT_response(msg)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(GPT_answer))
-    except Exception as e:  # 更一般的異常捕捉
+    except Exception as e:
         print(f"Error: {traceback.format_exc()}")  # 印出完整的錯誤堆棧
-        error_message = '發生錯誤，請稍後再試。'  # 更通用的錯誤消息
+        error_message = '發生錯誤，請稍後再試。錯誤詳情：' + str(e)  # 顯示錯誤的具體訊息
         if 'quota' in str(e).lower():  # 檢查錯誤是否與額度有關
-            error_message = '你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'
+            error_message = '你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息。錯誤詳情：' + str(e)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(error_message))
        
 
