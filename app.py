@@ -30,7 +30,7 @@ def GPT_response(text):
     # 使用 chat/completions 端点
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",  # 确保使用正确的模型名称
-        messages=[{"role": "system", "content": "您好！我是您的助手。"} ,{"role": "user", "content": text}],
+        messages=[{"role": "system", "content": "我是您的助理，絕對只使用繁体中文回答您的问题。"} ,{"role": "user", "content": text}],
         temperature=0.5,
         max_tokens=500
     )
