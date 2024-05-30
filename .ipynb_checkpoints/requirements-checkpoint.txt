@@ -7,4 +7,5 @@ tiktoken
 langchain-openai
 langchain-core
 configparser
+gunicorn
 requests
