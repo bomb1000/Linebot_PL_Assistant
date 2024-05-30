@@ -6,6 +6,7 @@ SQLAlchemy
 tiktoken
 langchain-openai
 langchain-core
+langchain
 configparser
 gunicorn
 requests
