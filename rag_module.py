@@ -18,6 +18,20 @@ connection_string = f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('D
                     f"{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
 engine = create_engine(connection_string)
 
+# Create connection and run SQL command to install pgvector extension
+with engine.connect() as connection:
+    connection.execute(sql_text("CREATE EXTENSION IF NOT EXISTS vector;"))
+    result = connection.execute(sql_text("SELECT extname FROM pg_extension WHERE extname = 'vector';")).fetchone()
+    if result:
+        print("pgvector extension enabled successfully")
+        vector_check = connection.execute(sql_text("SELECT typname FROM pg_type WHERE typname = 'vector';")).fetchone()
+        if vector_check:
+            print("vector type enabled successfully")
+        else:
+            raise Exception("vector type not enabled successfully")
+    else:
+        raise Exception("pgvector extension not enabled successfully")
+
 def get_query_embedding(query):
     return embeddings.embed_query(query)
 
