@@ -11,3 +11,4 @@ langchain-community
 configparser
 gunicorn
 requests
+pgvector

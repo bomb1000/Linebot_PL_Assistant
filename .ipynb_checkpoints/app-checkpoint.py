@@ -11,6 +11,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
 from langchain.embeddings import OpenAIEmbeddings
 import rag_module  # Import the RAG module
+from pgvector.sqlalchemy import Vector  # Import the Vector type
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -38,7 +39,7 @@ class Document(Base):
     __tablename__ = 'documents'
     id = Column(Integer, primary_key=True)
     content = Column(Text)
-    embedding = Column('embedding', VECTOR(1536))
+    embedding = Column(Vector(1536))  # Use the imported Vector type
 
 # Create session
 Session = sessionmaker(bind=engine)
